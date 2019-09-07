@@ -1,28 +1,44 @@
 import React from 'react';
-import { YellowBox, View, StyleSheet } from 'react-native';
-import Slider from './components/Slider';
+import { YellowBox } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { setCustomText } from 'react-native-global-props';
+
+import SliderScreen from './components/SliderScreen';
+import LoginScreen from './components/LoginScreen';
+import SubmitScreen from './components/SubmitScreen';
+
 YellowBox.ignoreWarnings(['Remote debugger']);
 
+
 class App extends React.Component {
+
   render(){
     return(
-      <View>
-        <Slider/>
-        <View style={{width: '100%', position: 'absolute', bottom: 7, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <View style={styles.blackLine}/>
-        </View>
-      </View>
+     <AppContainer/>
     )
   }
 }
 
-const styles = StyleSheet.create({
-  blackLine: {
-    height: 5, 
-    width: 135,
-    backgroundColor: 'black', 
-    borderRadius: 3,
+const AppStackNavigator = createStackNavigator(
+  {
+    Slider: SliderScreen,
+    Login: LoginScreen,
+    Submit: SubmitScreen
+  },
+  {
+    initialRouteName: 'Slider',
   }
-})
+)
+
+const AppContainer = createAppContainer(AppStackNavigator);
+
+const customTextProps = {
+  style: {
+    fontFamily: 'Roboto',
+  }
+};
+
+setCustomText(customTextProps);
 
 export default App;
